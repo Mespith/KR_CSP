@@ -1,0 +1,1 @@
+#This script checks if a given CSP is a solution.

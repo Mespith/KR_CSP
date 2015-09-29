@@ -1,0 +1,1 @@
+#This script creates sub-CSP's given a CSP.
