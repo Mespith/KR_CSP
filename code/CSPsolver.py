@@ -1,3 +1,4 @@
+import split
 #This script is the general CSP solving algorithm.
         
 def Solve(variables):
@@ -6,11 +7,15 @@ def Solve(variables):
     #Happy() (Check if problem is solved)
     solved = False
     if solved:
-        return true, solution
+        return True, solution
     else:
-        #Split() (Create sub-problems)
-        for CSP in splits:
-            success, result = Solve(CSP)
-            if success:
-                return result
-    return false, variables
+        #Create sub-problems
+        CSP_1, CSP_2 = split.Split(variables)
+        #Solve the sub-problems
+        success, result = Solve(CSP_1)
+        if success:
+            return result
+        success, result = Solve(CSP_2)
+        if success:
+            return result
+    return False, variables
