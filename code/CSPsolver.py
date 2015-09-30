@@ -1,11 +1,12 @@
 import split
+import validation
 #This script is the general CSP solving algorithm.
         
 def Solve(variables):
     #Preprocess() (rewrite problem in the format you want)
     #Constraint propagation() (k-consistency)
-    #Happy() (Check if problem is solved)
-    solved = False
+    #Check if problem is solved
+    solved = validation.Happy(variables)
     if solved:
         return True, solution
     else:
@@ -18,4 +19,4 @@ def Solve(variables):
         success, result = Solve(CSP_2)
         if success:
             return result
-    return False, variables
+    return False, variables 
