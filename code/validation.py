@@ -4,3 +4,4 @@ def Happy(CSP):
     for variable in CSP:
         if len(variable.domain) > 1:
             return False
+    return True
