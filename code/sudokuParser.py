@@ -30,5 +30,5 @@ def ParseFile(filePath):
         sudokus.append(ParseLine(line))
     return sudokus
     
-results = ParseFile("100 sudokus.txt")
+results = ParseFile("../1000 sudokus.txt")
 print(results)
