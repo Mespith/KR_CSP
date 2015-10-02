@@ -10,13 +10,56 @@ oneLine = ".94...13..............76..2.8..1.....32.........2...6.....5.4.......8
 size = 0
 
 #this def is right from: http://stackoverflow.com/questions/1265665/python-check-if-a-string-represents-an-int-without-using-try-except
-def RepresentsInt(s):
+def RepresentsInt( s ):
     try: 
         int(s)
         return True
     except ValueError:
         return False
 
+#takes number of variables which decides on the size of the list how big the sudoku must be
+def general_sudoku_constraints( variables ):
+    size = int (math.sqrt(len(variables) )) 
+    constraints = []
+    #constraint for every number in every column the number cannot be equal
+    for a in range (0, size):
+        row = variables[ size * a : size * a + size]
+        for i in row:
+            for j in row:
+                if(i != j):
+                    new_constraint =  constraint.constraint( i )
+                    new_constraint.variable2 = j
+                    constraints.append( new_constraint )
+
+
+    #constraints for every 
+    for i in range(0,size):
+        #makes 9 rows
+        column = []
+
+        for j in range( 0, size ):
+            #makes a row 
+            column.append( variables[ size * j + i] )
+        for k in column:
+            for z in column:
+                if( k != z ):
+                    new_constraint = constraint.constraint( k )
+                    new_constraint.variable2 = z
+                    constraints.append( new_constraint )
+
+    #constraints for every box
+    boxsize = int (math.sqrt( size) )
+    for i in range( 0, boxsize ):
+        #makes 9 boxes (a box has the same number of variables as the size of the sudoku)
+        box = []
+        for j in range( 0, int ( boxsize ) :
+            for k in range( 0, int( boxsize )
+
+
+
+
+
+    return size
 
 def ParseLine(line,size):
     #the variables of the sudoku
@@ -31,13 +74,21 @@ def ParseLine(line,size):
             #Create a variable with a full domain
             variables.append(variable.Variable(range(1, size+1)))
             #create a constraint
-            new_constraint =  constraint.constraint( count )
-            new_constraint.domain_constraint = [1 , 2, 3, 4, 5, 6, 7, 8, 9].remove(int(unit))
-            constraints.append (new_constraint)
+            constraint_list = [1 , 2, 3, 4, 5, 6, 7, 8, 9] 
+            constraint_list.remove (int(unit) )
+            for x in constraint_list:
+                new_constraint =  constraint.constraint( variables[ len(variables) - 1 ] )
+                new_constraint.unary_constraint = x
+                constraints.append (new_constraint)
         count = count + 1
+
+    sudoku_constraints = general_sudoku_constraints( variables )
     
     return [variables, constraints]
    
+#it returns a list of sukoku's
+#a sudoku is a tuple of a list ofvariables and a list of constraints
+#both the variables and the constrains are objects
 
 def ParseFile(filePath):
     sudokus = []
@@ -48,6 +99,7 @@ def ParseFile(filePath):
         sudokus.append(ParseLine(line,size))
     return sudokus
     
-results = ParseFile("../1000 sudokus.txt")
+#results = ParseFile("../1000 sudokus.txt")
+ParseLine(oneLine, 9)
 
-print results[0][0][0].domain
+#print results[0][0][0].domain
