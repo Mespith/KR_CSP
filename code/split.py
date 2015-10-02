@@ -1,4 +1,5 @@
 import random
+import variable
 #This script creates sub-CSP's given a CSP.
 
 def Split(CSP):
