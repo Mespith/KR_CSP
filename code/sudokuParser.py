@@ -21,6 +21,7 @@ def RepresentsInt( s ):
 def general_sudoku_constraints( variables ):
     size = int (math.sqrt(len(variables) )) 
     constraints = []
+    
     #constraint for every number in every column the number cannot be equal
     for a in range (0, size):
         row = variables[ size * a : size * a + size]
@@ -50,12 +51,14 @@ def general_sudoku_constraints( variables ):
     #constraints for every box
     #first column of boxes
     boxsize = int (math.sqrt( size) )
+
     for i in range( 0, boxsize ):
         #makes 9 boxes (a box has the same number of variables as the size of the sudoku)
         box = []
         for j in range(0, boxsize ) :
             for k in range(0, boxsize ):
                 box.append( variables [ k + j* size + (i * boxsize * size) ] )
+
         for k in box:
             for z in box:
                 if( k != z ):
@@ -70,6 +73,9 @@ def general_sudoku_constraints( variables ):
         for j in range(0, boxsize ) :
             for k in range(0, boxsize ):
                 box.append( variables [ k + j* size + (i * boxsize * size) + 3 ] )
+                
+                print (k + j* size + (i * boxsize * size) + 3)
+                
         for k in box:
             for z in box:
                 if( k != z ):
@@ -132,7 +138,10 @@ def ParseFile(filePath):
         sudokus.append(ParseLine(line,size))
     return sudokus
     
-#results = ParseFile("../1000 sudokus.txt")
-ParseLine(oneLine, 9)
+results = ParseFile("../1000 sudokus.txt")
+#print results[0]
+
+#ParseLine( results[0], 9)
+
 
 #print results[0][0][0].domain
