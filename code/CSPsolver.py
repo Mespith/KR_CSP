@@ -2,7 +2,7 @@ import split
 import validation
 #This script is the general CSP solving algorithm.
         
-def Solve(variables):
+def Solve(variables, constraints):
     #Preprocess() (rewrite problem in the format you want)
     #Constraint propagation() (k-consistency)
     #Check if problem is solved
