@@ -48,18 +48,50 @@ def general_sudoku_constraints( variables ):
                     constraints.append( new_constraint )
 
     #constraints for every box
+    #first column of boxes
     boxsize = int (math.sqrt( size) )
     for i in range( 0, boxsize ):
         #makes 9 boxes (a box has the same number of variables as the size of the sudoku)
         box = []
-        for j in range( 0, int ( boxsize ) :
-            for k in range( 0, int( boxsize )
+        for j in range(0, boxsize ) :
+            for k in range(0, boxsize ):
+                box.append( variables [ k + j* size + (i * boxsize * size) ] )
+        for k in box:
+            for z in box:
+                if( k != z ):
+                    new_constraint = constraint.constraint( k )
+                    new_constraint.variable2 = z
+                    constraints.append( new_constraint )
 
+    #second column of boxes
+    for i in range( 0, boxsize ):
+        #makes 9 boxes (a box has the same number of variables as the size of the sudoku)
+        box = []
+        for j in range(0, boxsize ) :
+            for k in range(0, boxsize ):
+                box.append( variables [ k + j* size + (i * boxsize * size) + 3 ] )
+        for k in box:
+            for z in box:
+                if( k != z ):
+                    new_constraint = constraint.constraint( k )
+                    new_constraint.variable2 = z
+                    constraints.append( new_constraint )
 
+    #third column of boxes
+    for i in range( 0, boxsize ):
+        #makes 9 boxes (a box has the same number of variables as the size of the sudoku)
+        box = []
+        for j in range(0, boxsize ) :
+            for k in range(0, boxsize ):
+                box.append( variables [ k + j* size + (i * boxsize * size) + 6 ] )
+        for k in box:
+            for z in box:
+                if( k != z ):
+                    new_constraint = constraint.constraint( k )
+                    new_constraint.variable2 = z
+                    constraints.append( new_constraint )
 
-
-
-    return size
+    return constraints
 
 def ParseLine(line,size):
     #the variables of the sudoku
@@ -83,6 +115,7 @@ def ParseLine(line,size):
         count = count + 1
 
     sudoku_constraints = general_sudoku_constraints( variables )
+    constraints = constraints + sudoku_constraints
     
     return [variables, constraints]
    
