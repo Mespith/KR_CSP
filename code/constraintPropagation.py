@@ -53,6 +53,68 @@ def general_sudoku_constraints( variables ):
                     new_constraint =  constraint.constraint( i )
                     new_constraint.variable2 = j
                     constraints.append( new_constraint )
+
+
+    #constraints for every 
+    for i in range(0,size):
+        #makes 9 rows
+        column = []
+
+        for j in range( 0, size ):
+            #makes a row 
+            column.append( variables[ size * j + i] )
+        for k in column:
+            for z in column:
+                if( k != z ):
+                    new_constraint = constraint.constraint( k )
+                    new_constraint.variable2 = z
+                    constraints.append( new_constraint )
+
+    #constraints for every box
+    #first column of boxes
+    boxsize = int (math.sqrt( size) )
+    for i in range( 0, boxsize ):
+        #makes 9 boxes (a box has the same number of variables as the size of the sudoku)
+        box = []
+        for j in range(0, boxsize ) :
+            for k in range(0, boxsize ):
+                box.append( variables [ k + j* size + (i * boxsize * size) ] )
+        for k in box:
+            for z in box:
+                if( k != z ):
+                    new_constraint = constraint.constraint( k )
+                    new_constraint.variable2 = z
+                    constraints.append( new_constraint )
+
+    #second column of boxes
+    for i in range( 0, boxsize ):
+        #makes 9 boxes (a box has the same number of variables as the size of the sudoku)
+        box = []
+        for j in range(0, boxsize ) :
+            for k in range(0, boxsize ):
+                box.append( variables [ k + j* size + (i * boxsize * size) + 3 ] )
+        for k in box:
+            for z in box:
+                if( k != z ):
+                    new_constraint = constraint.constraint( k )
+                    new_constraint.variable2 = z
+                    constraints.append( new_constraint )
+
+    #third column of boxes
+    for i in range( 0, boxsize ):
+        #makes 9 boxes (a box has the same number of variables as the size of the sudoku)
+        box = []
+        for j in range(0, boxsize ) :
+            for k in range(0, boxsize ):
+                box.append( variables [ k + j* size + (i * boxsize * size) + 6 ] )
+        for k in box:
+            for z in box:
+                if( k != z ):
+                    new_constraint = constraint.constraint( k )
+                    new_constraint.variable2 = z
+                    constraints.append( new_constraint )
+
+    return constraints
     
 result = ParseLine(oneLine, 9)
 CSP = result[0]
@@ -70,9 +132,26 @@ def consistency(k, CSP, constraints):
         for ni in Ni:
             Li = i_tupleL(ni, i)
             for li in Li:
+                print(li)
                 if not CheckRelations(ni, li, constraints):
                     someList.append((ni, li, i))
                     M[(ni, li)] = 1
+    #Step 2
+    for element in someList:
+        ni = element[0]
+        li = element[1]
+        i = element[2]
+        if i < k:
+            #Propagate the lvl i + 1
+            for n in CSP:
+                if n not in ni:
+                    for l in n.domain:
+                        N = ni + n
+                        L = li + l
+                        if M[(N, L)] == 0:
+                            someList.append((N, L, i+1))
+                            M[(N, L)] = 1
+                            R
 
 def i_tupleL(variables, i):
     domains = []
@@ -81,7 +160,7 @@ def i_tupleL(variables, i):
     if i == 1:
         return itertools.combinations(domains[0], i)
     else:
-        return itertools.product(domains, repeat=i)
+        return itertools.product(*domains)
     
 def CheckRelations(variables, values, constraints):
     for constraint in constraints:
@@ -96,7 +175,8 @@ def CheckRelations(variables, values, constraints):
                 value2 = values[variables.index(constraint.variable2)]
                 #Because all the constraints are inequlity constraints, it is not met if the values are the same.
                 if value1 == value2:
+                    print('Variable with value: ', value1, 'Second variable: ', value2)
                     return False
     return True
     
-consistency(1, CSP, constraints)
+consistency(2, CSP, constraints)
