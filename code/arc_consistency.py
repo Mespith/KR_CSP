@@ -1,4 +1,3 @@
-import constraint
 from collections import deque
 
 def AC_3(variables, constraints):
@@ -31,9 +30,13 @@ def arc_reduce(x, y):
     change = False
     
     if len(y.domain) == 1:
+        print(y.domain)
         #Try to remove the value of y from the domain of x
         try:
+            print(x.domain)
             x.domain.remove(y.domain[0])
-            change = True    
-    
+            print(x.domain)
+            change = True
+        except:
+            change = False
     return change
