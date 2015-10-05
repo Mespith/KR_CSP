@@ -5,8 +5,7 @@ import CSPsolver as so
 #- A file containing sudokus. Example: sudoku-1000.txt
 
 #Parse the sudoku input
-#sudokus = sp.ParseFile("C:/Users/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/1000 sudokus.txt")
-print('parsed')
+sudokus = sp.ParseFile("D:/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/1000 sudokus.txt")
 
 #Solve the CSP
 results = []
@@ -20,10 +19,14 @@ def ParseResults(filePath, results):
     f = open(fileName, 'w')
     
     for result in results:
-        for var in result[0]:
+        for var in result[1]:
             value = str(var.domain[0])
             f.write(value)
         f.write('\n')
     f.close()
     
-ParseResults("C:/Users/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/1000 sudokus.txt")
+print('Solving sudoku 1')
+result = so.Solve(sudokus[0][0], sudokus[0][1], 0)
+print('Generating output file.')
+ParseResults("D:/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/1000 sudokus.txt", [result])
+print('Finished.')

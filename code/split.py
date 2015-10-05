@@ -82,6 +82,7 @@ def Split(CSP):
     while len(splitVar.domain) <= 1:
         varIndex = random.randint(0, len(CSP)-1)
         splitVar = CSP[varIndex]
+        
     valueIndex = random.randint(0, len(splitVar.domain)-1)
     
     value = copy.deepcopy(splitVar.domain[valueIndex])

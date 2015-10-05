@@ -108,7 +108,7 @@ def ParseLine(line,size):
             #Create a variable with a full domain
             variables.append(variable.Variable(range(1, size+1)))
             #Create all the unary constraints for this given number
-            constraint_list = [1, 2, 3, 4, 5, 6, 7, 8, 9] 
+            constraint_list = range(1, size+1) 
             constraint_list.remove (int(unit))
             for x in constraint_list:
                 new_constraint =  constraint.constraint( variables[ len(variables) - 1 ] )
@@ -129,13 +129,13 @@ def ParseFile(filePath):
     #Open the file.
     print('Opening the file...')
     sudokuFile = open(filePath, 'r')
+    print('File opened. Parsing lines.')
     #Parse every line into a sudoku with respecting constraints
     for line in sudokuFile:
         if size == 0:
+            size = int (math.sqrt(len(line) -1))
             print('Apparently we are working with a sudoku of size ' + str(size))
-            size = int (math.sqrt(len(line) -1) )
-        print('Parsing line: ', line)
         sudoku = ParseLine(line,size)
-        print('Success! We have ' + str(len(sudoku[0])) + ' variables and ' + str(len(sudoku[1])) + 'constraints.')
         sudokus.append(sudoku)
+    print('Finished parsing.')
     return sudokus
