@@ -74,7 +74,7 @@ def general_sudoku_constraints( variables ):
             for k in range(0, boxsize ):
                 box.append( variables [ k + j* size + (i * boxsize * size) + 3 ] )
                 
-                print (k + j* size + (i * boxsize * size) + 3)
+                #print (k + j* size + (i * boxsize * size) + 3)
                 
         for k in box:
             for z in box:
@@ -123,6 +123,7 @@ def ParseLine(line,size):
     sudoku_constraints = general_sudoku_constraints( variables )
     constraints = constraints + sudoku_constraints
     
+    print sudoku_constraints
     return [variables, constraints]
    
 #it returns a list of sukoku's
