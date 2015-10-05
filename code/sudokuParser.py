@@ -69,7 +69,7 @@ def general_sudoku_constraints( variables ):
         box = []
         for j in range(0, boxsize ) :
             for k in range(0, boxsize ):
-                box.append( variables [ k + j* size + (i * boxsize * size) + 3 ] )                
+                box.append( variables [ k + j* size + (i * boxsize * size) + 3 ] )
                 
         for k in box:
             for z in box:
