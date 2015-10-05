@@ -30,12 +30,9 @@ def arc_reduce(x, y):
     change = False
     
     if len(y.domain) == 1:
-        print(y.domain)
         #Try to remove the value of y from the domain of x
         try:
-            print(x.domain)
             x.domain.remove(y.domain[0])
-            print(x.domain)
             change = True
         except:
             change = False

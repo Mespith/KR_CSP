@@ -5,10 +5,12 @@ import CSPsolver
 #- A file containing sudokus. Example: sudoku-1000.txt
 
 #Parse the sudoku input
-sudokus, constraints = sudokuParser.ParseFile("../1000 sudokus.txt")
+sudokus = sudokuParser.ParseFile("C:/Users/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/1000 sudokus.txt")
+print('parsed')
 
 #Solve the CSP
-for i in range(len(sudokus)):
-    success, result = CSPsolver.Solve(sudokus[i], constraints[i])
+#for i in range(len(sudokus)):
+result = CSPsolver.Solve(sudokus[0][0], sudokus[0][1])
+print(result[0], result[1])
 
 #Generate output file

@@ -34,8 +34,8 @@ def most_constraining_split(CSP):
 
     valueIndex = random.randint(0, len(splitVar.domain)-1)
     
-    CSP_1[varIndex].domain = [splitVar[valueIndex]]
-    CSP_2[varIndex].domain.remove(splitVar[valueIndex])
+    CSP_1[varIndex].domain = [splitVar.domain[valueIndex]]
+    CSP_2[varIndex].domain.remove(splitVar.domain[valueIndex])
     
     return CSP_1, CSP_2
 
@@ -44,9 +44,8 @@ def most_constraining_split(CSP):
     return smallest_domains[0]
 
 def Split(CSP):
-    CSP_1 = list(CSP)
-    CSP_2 = list(CSP)
-
+    CSP_1 = copy.deepcopy( CSP ) 
+    CSP_2 = copy.deepcopy( CSP )
 
     varIndex = random.randint(0, len(CSP)-1)
     splitVar = CSP[varIndex]
@@ -55,7 +54,9 @@ def Split(CSP):
         splitVar = CSP[varIndex]
     valueIndex = random.randint(0, len(splitVar.domain)-1)
     
-    CSP_1[varIndex].domain = [splitVar[valueIndex]]
-    CSP_2[varIndex].domain.remove(splitVar[valueIndex])
+    value = copy.deepcopy(splitVar.domain[valueIndex])
+    CSP_1[varIndex].domain = []
+    CSP_1[varIndex].domain.append(value)
+    CSP_2[varIndex].domain.remove(value)
     
     return CSP_1, CSP_2
