@@ -17,11 +17,9 @@ def RepresentsInt( s ):
         return False
 
 #Takes number of variables which decides on the size of the list how big the sudoku must be
-def general_sudoku_constraints( variables ):
-    size = int (math.sqrt(len(variables) )) 
+def general_sudoku_constraints( size ):
     constraints = []
-    indexVariables = [x for x in range( len(variables) ) ]
-    print indexVariables
+    indexVariables = [x for x in range( size ** 2 ) ]
     #constraint for every number in every column the number cannot be equal
     for a in range (0, size):
         row = indexVariables[ size * a : size * a + size]
@@ -94,8 +92,6 @@ def general_sudoku_constraints( variables ):
                     new_constraint = constraint.constraint( k )
                     new_constraint.variable2 = z
                     constraints.append( new_constraint )
-    print constraints[1].variable1
-    print constraints[1].variable2
 
     return constraints
 
@@ -117,15 +113,11 @@ def ParseLine(line,size):
             constraint_list = range(1, size+1) 
             constraint_list.remove (int(unit))
             for x in constraint_list:
-                new_constraint =  constraint.constraint( variables[ len(variables) - 1 ] )
+                new_constraint =  constraint.constraint( len(variables) - 1 )
                 new_constraint.unary_constraint = x
                 constraints.append (new_constraint)
         count = count + 1
 
-    sudoku_constraints = general_sudoku_constraints( variables )
-    constraints = constraints + sudoku_constraints
-    print "blub"
-    print len(constraints)
     return (variables, constraints)
 
    
@@ -133,6 +125,7 @@ def ParseLine(line,size):
 #A sudoku is a tuple of a list of variables and a list of constraints.
 def ParseFile(filePath):
     sudokus = []
+    sudoku_constraints = []
     size = 0
     #Open the file.
     print('Opening the file...')
@@ -140,11 +133,13 @@ def ParseFile(filePath):
     print('File opened. Parsing lines.')
     #Parse every line into a sudoku with respecting constraints
     for line in sudokuFile:
-        if size == 0:
-            size = int (math.sqrt(len(line) -1))
+        newSize = int (math.sqrt(len(line)))
+        if size != newSize:
+            size = newSize
+            sudoku_constraints = general_sudoku_constraints( size )
             print('Apparently we are working with a sudoku of size ' + str(size))
         sudoku = ParseLine(line,size)
-        sudokus.append(sudoku)
+        sudokus.append((sudoku[0], sudoku[1], sudoku_constraints))
     print('Finished parsing.')
     return sudokus
 
