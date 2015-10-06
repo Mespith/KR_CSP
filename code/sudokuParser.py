@@ -119,11 +119,8 @@ def ParseLine(line,size):
     sudoku_constraints = general_sudoku_constraints( variables )
     constraints = constraints + sudoku_constraints
     
-<<<<<<< HEAD
-    return [variables, constraints]
-=======
     return (variables, constraints)
->>>>>>> 5f6ac0b53a30dcbc110793611a3d7af0f59a1bd0
+
    
 #It returns a list of sukoku's
 #A sudoku is a tuple of a list of variables and a list of constraints.
