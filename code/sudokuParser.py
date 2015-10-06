@@ -6,10 +6,7 @@ import math
 #- Each Sudoku is represented on a single line with 81 numbers and dots
 #- Cells are enumerated from top-left to bottom-right
 
-oneLine = ".94...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4..8............942.8.16.....29........89.6.....14..25......4.......2...8.9..5....7.."
-size = 0
-
-#this def is right from: http://stackoverflow.com/questions/1265665/python-check-if-a-string-represents-an-int-without-using-try-except
+#This def is right from: http://stackoverflow.com/questions/1265665/python-check-if-a-string-represents-an-int-without-using-try-except
 def RepresentsInt( s ):
     try: 
         int(s)
@@ -17,7 +14,7 @@ def RepresentsInt( s ):
     except ValueError:
         return False
 
-#takes number of variables which decides on the size of the list how big the sudoku must be
+#Takes number of variables which decides on the size of the list how big the sudoku must be
 def general_sudoku_constraints( variables ):
     size = int (math.sqrt(len(variables) )) 
     constraints = []
@@ -74,8 +71,6 @@ def general_sudoku_constraints( variables ):
             for k in range(0, boxsize ):
                 box.append( variables [ k + j* size + (i * boxsize * size) + 3 ] )
                 
-                #print (k + j* size + (i * boxsize * size) + 3)
-                
         for k in box:
             for z in box:
                 if( k != z ):
@@ -100,8 +95,9 @@ def general_sudoku_constraints( variables ):
     return constraints
 
 def ParseLine(line,size):
-    #the variables of the sudoku
+    #The variables of the sudoku
     variables = []
+    #The constraints of the sudoku
     constraints = []
     count = 0
     for unit in line:
@@ -111,9 +107,9 @@ def ParseLine(line,size):
         elif( RepresentsInt( unit ) ):
             #Create a variable with a full domain
             variables.append(variable.Variable(range(1, size+1)))
-            #create a constraint
-            constraint_list = [1 , 2, 3, 4, 5, 6, 7, 8, 9] 
-            constraint_list.remove (int(unit) )
+            #Create all the unary constraints for this given number
+            constraint_list = range(1, size+1) 
+            constraint_list.remove (int(unit))
             for x in constraint_list:
                 new_constraint =  constraint.constraint( variables[ len(variables) - 1 ] )
                 new_constraint.unary_constraint = x
@@ -123,25 +119,27 @@ def ParseLine(line,size):
     sudoku_constraints = general_sudoku_constraints( variables )
     constraints = constraints + sudoku_constraints
     
+<<<<<<< HEAD
     return [variables, constraints]
+=======
+    return (variables, constraints)
+>>>>>>> 5f6ac0b53a30dcbc110793611a3d7af0f59a1bd0
    
-#it returns a list of sukoku's
-#a sudoku is a tuple of a list ofvariables and a list of constraints
-#both the variables and the constrains are objects
-
+#It returns a list of sukoku's
+#A sudoku is a tuple of a list of variables and a list of constraints.
 def ParseFile(filePath):
     sudokus = []
+    size = 0
     #Open the file.
+    print('Opening the file...')
     sudokuFile = open(filePath, 'r')
+    print('File opened. Parsing lines.')
+    #Parse every line into a sudoku with respecting constraints
     for line in sudokuFile:
-        size = int (math.sqrt(len(line) -1) )
-        sudokus.append(ParseLine(line,size))
+        if size == 0:
+            size = int (math.sqrt(len(line) -1))
+            print('Apparently we are working with a sudoku of size ' + str(size))
+        sudoku = ParseLine(line,size)
+        sudokus.append(sudoku)
+    print('Finished parsing.')
     return sudokus
-    
-results = ParseFile("../1000 sudokus.txt")
-#print results[0]
-
-#ParseLine( results[0], 9)
-
-
-#print results[0][0][0].domain
