@@ -107,6 +107,7 @@ def ParseLine(line,size):
     count = 0
     for unit in line:
         if unit == '.':
+
             #Create a variable with a full domain.
             variables.append(variable.Variable(range(1, size+1)))
         elif( RepresentsInt( unit ) ):
@@ -123,7 +124,8 @@ def ParseLine(line,size):
 
     sudoku_constraints = general_sudoku_constraints( variables )
     constraints = constraints + sudoku_constraints
-    
+    print "blub"
+    print len(constraints)
     return (variables, constraints)
 
    
