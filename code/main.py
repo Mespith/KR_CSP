@@ -5,7 +5,7 @@ import CSPsolver
 #- A file containing sudokus. Example: sudoku-1000.txt
 
 #Parse the sudoku input
-sudokus, constraints = sudokuParser.ParseFile("../1000 sudokus.txt")
+sudokus = sudokuParser.ParseFile("../1000 sudokus.txt")
 
 #Solve the CSP
 for i in range(len(sudokus)):
