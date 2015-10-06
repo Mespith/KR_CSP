@@ -7,6 +7,8 @@ import math
 #- Cells are enumerated from top-left to bottom-right
 
 #This def is right from: http://stackoverflow.com/questions/1265665/python-check-if-a-string-represents-an-int-without-using-try-except
+first_sudoku_line = ".94...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4..8"
+
 def RepresentsInt( s ):
     try: 
         int(s)
@@ -18,10 +20,11 @@ def RepresentsInt( s ):
 def general_sudoku_constraints( variables ):
     size = int (math.sqrt(len(variables) )) 
     constraints = []
-    
+    indexVariables = [x for x in range( len(variables) ) ]
+    print indexVariables
     #constraint for every number in every column the number cannot be equal
     for a in range (0, size):
-        row = variables[ size * a : size * a + size]
+        row = indexVariables[ size * a : size * a + size]
         for i in row:
             for j in row:
                 if(i != j):
@@ -37,7 +40,7 @@ def general_sudoku_constraints( variables ):
 
         for j in range( 0, size ):
             #makes a row 
-            column.append( variables[ size * j + i] )
+            column.append( indexVariables[ size * j + i] )
         for k in column:
             for z in column:
                 if( k != z ):
@@ -54,7 +57,7 @@ def general_sudoku_constraints( variables ):
         box = []
         for j in range(0, boxsize ) :
             for k in range(0, boxsize ):
-                box.append( variables [ k + j* size + (i * boxsize * size) ] )
+                box.append( indexVariables [ k + j* size + (i * boxsize * size) ] )
 
         for k in box:
             for z in box:
@@ -69,7 +72,7 @@ def general_sudoku_constraints( variables ):
         box = []
         for j in range(0, boxsize ) :
             for k in range(0, boxsize ):
-                box.append( variables [ k + j* size + (i * boxsize * size) + 3 ] )
+                box.append( indexVariables[ k + j* size + (i * boxsize * size) + 3 ] )
                 
         for k in box:
             for z in box:
@@ -84,13 +87,15 @@ def general_sudoku_constraints( variables ):
         box = []
         for j in range(0, boxsize ) :
             for k in range(0, boxsize ):
-                box.append( variables [ k + j* size + (i * boxsize * size) + 6 ] )
+                box.append( indexVariables[ k + j* size + (i * boxsize * size) + 6 ] )
         for k in box:
             for z in box:
                 if( k != z ):
                     new_constraint = constraint.constraint( k )
                     new_constraint.variable2 = z
                     constraints.append( new_constraint )
+    print constraints[1].variable1
+    print constraints[1].variable2
 
     return constraints
 
@@ -140,3 +145,5 @@ def ParseFile(filePath):
         sudokus.append(sudoku)
     print('Finished parsing.')
     return sudokus
+
+ParseLine( first_sudoku_line, 9)

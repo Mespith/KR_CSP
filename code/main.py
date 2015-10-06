@@ -6,7 +6,7 @@ import CSPsolver as so
 
 #Parse the sudoku input
 
-sudokus = sudokuParser.ParseFile("../1000 sudokus.txt")
+sudokus = sp.ParseFile("../1000 sudokus.txt")
 
 #Solve the CSP
 results = []
@@ -29,5 +29,5 @@ def ParseResults(filePath, results):
 print('Solving sudoku 1')
 result = so.Solve(sudokus[0][0], sudokus[0][1], 0)
 print('Generating output file.')
-ParseResults("D:/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/1000 sudokus.txt", [result])
+ParseResults("1000 sudokus.txt", [result])
 print('Finished.')
