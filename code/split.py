@@ -46,6 +46,7 @@ def most_constraining_split(CSP):
 
 #this splits the CSP for the variable that occurs in most constraints
 def most_constraining_split2( CSP , constraints):
+
     CSP_1 = copy.deepcopy( CSP ) 
     CSP_2 = copy.deepcopy( CSP )
     
@@ -58,19 +59,23 @@ def most_constraining_split2( CSP , constraints):
         variables_in_constraints.append( x.variable2 )
 
     # the most occuring variable in variables_in_constrains
-    most_constraining = max(set( variables_in_constraints ), key=lst.coun)
+    most_constraining = max(set( variables_in_constraints ), key=variables_in_constraints.count)
 
-    varIndex = CSP[0].index( most_constraining )
+    varIndex = most_constraining
+
     splitVar = CSP[varIndex]
     while len(splitVar.domain) <= 1:
         varIndex = random.randint(0, len(CSP)-1)
         splitVar = CSP[varIndex]
+
     valueIndex = random.randint(0, len(splitVar.domain)-1)
     
-    CSP_1[varIndex].domain = [splitVar[valueIndex]]
-    CSP_2[varIndex].domain.remove(splitVar[valueIndex])
+    value = copy.deepcopy(splitVar.domain[valueIndex])
+    CSP_1[varIndex].domain = []
+    CSP_1[varIndex].domain.append(value)
+    CSP_2[varIndex].domain.remove(value)
 
-    return CSP_1, CPS_2
+    return CSP_1, CSP_2
 
 
 

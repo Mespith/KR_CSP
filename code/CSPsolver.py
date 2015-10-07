@@ -16,7 +16,7 @@ def Solve(variables, unary_constraints, constraints, count, satisfied_constraint
         return (True, variables, count)
     else:
         #Create sub-problems
-        CSP_1, CSP_2 = split.most_constraining_split2(variables, constraints)
+        CSP_1, CSP_2 = split.Split(variables)
         #Solve the sub-problems
         result = Solve(CSP_1, unary_constraints, constraints, count+1, satisfied_constraints)
         if result[0]:
