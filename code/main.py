@@ -15,7 +15,7 @@ sample_size = 10
 random_sample = random.sample(xrange(len(sudokus)), sample_size)
 for i in range(sample_size):
     print('Solving sudoku ' + str(i + 1))
-    result = so.Solve(sudokus[i][0], sudokus[i][1], sudokus[i][2], 0)
+    result = so.Solve(sudokus[i][0], sudokus[i][1], sudokus[i][2], 0, [])
     print('Found a solution in ' + str(result[2]) + ' recursions.')
     results.append(result)
 
