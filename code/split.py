@@ -7,7 +7,7 @@ import sys
 
 #this takes the variable with the smallest domain and splits it on this domain
 def most_constraining_split(CSP):
-    variables = CSP[0]
+    variables = CSP
 
     CSP_1 = copy.deepcopy( CSP ) 
     CSP_2 = copy.deepcopy( CSP )
@@ -25,30 +25,34 @@ def most_constraining_split(CSP):
 
     m = min(variables_domain)
 
-    Smallest_domains = [i for i, j in enumerate(a) if j == m]
+    smallest_domains = [i for i, j in enumerate(variables_domain) if j == m]
 
-    Smallest_domain = smallest_domains[0]
+    smallest_domain = smallest_domains[0]
 
     varIndex = smallest_domain
 
-    splitVar = CSP[0][varIndex]
+    splitVar = CSP[varIndex]
 
     valueIndex = random.randint(0, len(splitVar.domain)-1)
-    
-    CSP_1[varIndex].domain = [splitVar.domain[valueIndex]]
-    CSP_2[varIndex].domain.remove(splitVar.domain[valueIndex])
-    
+
+    value = copy.deepcopy(splitVar.domain[valueIndex])
+    CSP_1[varIndex].domain = []
+    CSP_1[varIndex].domain.append(value)
+    CSP_2[varIndex].domain.remove(value)
+
     return CSP_1, CSP_2
 
 
-
-    return smallest_domains[0]
-
 #this splits the CSP for the variable that occurs in most constraints
-def most_constraining_split2( CSP , constraints):
+def most_constraining_split2( CSP , constraints, satisfied_constraints):
 
     CSP_1 = copy.deepcopy( CSP ) 
     CSP_2 = copy.deepcopy( CSP )
+    new_constraints = []
+
+    for i in constraints:
+        if ( i not in satisfied_constraints ):
+            new_constraints.append( i )
     
 
     variables_in_constraints = []

@@ -3,7 +3,7 @@ from collections import deque
 def AC_3(variables, constraints, satisfied_constraints):
     new_satisfied_constraints = []
     #Create the queue for checking constraints
-    #queue = [item for item in constraints if item not in satisfied_constraints]
+    queue = [item for item in constraints if item not in satisfied_constraints]
     queue = deque(queue)
     
     while len(queue) > 0:
