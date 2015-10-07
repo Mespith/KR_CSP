@@ -45,8 +45,10 @@ def most_constraining_split(CSP):
     return smallest_domains[0]
 
 #this splits the CSP for the variable that occurs in most constraints
-def most_constraining_split2( CSP ):
-    constraints = CSP[1]
+def most_constraining_split2( CSP , constraints):
+    CSP_1 = copy.deepcopy( CSP ) 
+    CSP_2 = copy.deepcopy( CSP )
+    
 
     variables_in_constraints = []
     # makes the list variables_in_constraints that loops over all constraints
