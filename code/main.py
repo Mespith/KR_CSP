@@ -7,13 +7,13 @@ import random
 
 #Parse the sudoku input
 
-sudokus = sp.ParseFile("C:/Users/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/1000 sudokus.txt")
+sudokus = sp.ParseFile("D:/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/1000 sudokus.txt")
 
 #Solve the CSP's
 results = []
-sample_size = 10
-random_sample = random.sample(xrange(len(sudokus)), sample_size)
-for i in range(sample_size):
+sample_size = [602, 419, 840, 740, 806, 757, 532, 568, 406, 492]
+#random_sample = random.sample(xrange(len(sudokus)), sample_size)
+for i in sample_size:
     print('Solving sudoku ' + str(i + 1))
     result = so.Solve(sudokus[i][0], sudokus[i][1], sudokus[i][2], 0, [])
     print('Found a solution in ' + str(result[2]) + ' recursions.')
@@ -23,7 +23,7 @@ for i in range(sample_size):
 def ParseResults(filePath, results):
     fileName = filePath[:filePath.index('.')] + ' solutions.txt'
     f1 = open(fileName, 'w')
-    f2 = open('C:/Users/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/solution-recursions.txt', 'w')
+    f2 = open('D:/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/solution-recursions.txt', 'w')
     
     for i in range(len(results)):
         result = results[i]
@@ -38,5 +38,5 @@ def ParseResults(filePath, results):
     f2.close()
 
 print('Generating output file.')
-ParseResults("C:/Users/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/1000 sudokus.txt", results)
+ParseResults("D:/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/1000 sudokus.txt", results)
 print('Finished.')
