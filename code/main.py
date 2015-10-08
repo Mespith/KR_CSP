@@ -8,7 +8,7 @@ import time
 #- A file containing sudokus. Example: sudoku-1000.txt
 
 #Parse the sudoku input
-sudokus = sp.ParseFile("../1000 sudokus.txt")
+sudokus = sp.ParseFile("D:/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/1000 sudokus.txt")
 
 #Solve the CSP's
 results = []
@@ -32,7 +32,7 @@ print results
 def ParseResults(filePath, results):
     fileName = filePath[:filePath.index('.')] + ' solutions.txt'
     f1 = open(fileName, 'w')
-    f2 = open('solution-recursions.txt', 'w')
+    f2 = open('D:/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/solution-recursions.txt', 'w')
 
     for i in range(0, len(results)):
         result = results[i]
@@ -47,5 +47,5 @@ def ParseResults(filePath, results):
     f2.close()
 
 print('Generating output file.')
-ParseResults("../1000 sudokus.txt", results)
+ParseResults("D:/Jaimy/Documents/UVA/Knowledge Representation/Assignment2/KR_CSP/1000 sudokus.txt", results)
 print('Finished.')
