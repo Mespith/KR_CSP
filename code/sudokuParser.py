@@ -95,6 +95,7 @@ def general_sudoku_constraints( size ):
 
     return constraints
 
+#creates the variables and the unary constraints for the given values in the sudoku
 def ParseLine(line,size):
     #The variables of the sudoku
     variables = []

@@ -18,8 +18,9 @@ sudokus = sp.ParseFile( list_of_args[1] )
 results = []
 sample_size = [ 419, 840] #, 740, 740, 806, 757, 532, 568, 406, 492, 602]  
 sample_size2 = [x for x in range(50, 150)]
+all_sudokus = [x for x in range(0, len(sudokus) ) ]
 #random_sample = random.sample(xrange(len(sudokus)), sample_size)
-for i in sample_size:
+for i in all_sudokus:
     print('Solving sudoku ' + str(i + 1))
     start_time = time.time()
     result = so.Solve(sudokus[i][0], sudokus[i][1], sudokus[i][2], 0, [])
