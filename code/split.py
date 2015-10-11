@@ -9,8 +9,7 @@ import sys
 def SmallestDomainSplit(CSP):
     CSP_1 = copy.deepcopy( CSP ) 
     CSP_2 = copy.deepcopy( CSP )
-    #this picks a most contraining variable by choosing the first variable with the lowst
-    #numbers of domains
+
     index_variable = 0
     variables_domain = []
 
@@ -65,6 +64,51 @@ def MostConstrainingSplit( CSP , constraints, satisfied_constraints):
     splitVar = CSP[varIndex]
     valueIndex = random.randint(0, len(splitVar.domain)-1)
     
+    value = copy.deepcopy(splitVar.domain[valueIndex])
+    CSP_1[varIndex].domain = []
+    CSP_1[varIndex].domain.append(value)
+    CSP_2[varIndex].domain.remove(value)
+
+    return CSP_1, CSP_2
+
+def combined_split( CSP , constraints, satisfied_constraints):
+    CSP_1 = copy.deepcopy( CSP ) 
+    CSP_2 = copy.deepcopy( CSP )
+    #this picks a most contraining variable by choosing the first variable with the lowst
+    #numbers of domains
+    index_variable = 0
+    variables_domain = []
+
+    for i in CSP:
+        # This so that split doesn't take empty domains or domains of 1
+        if (len(i.domain) <= 1 ):
+            variables_domain.append( sys.maxint )
+        else:
+            variables_domain.append( len(i.domain) )
+
+    m = min(variables_domain)
+
+    smallest_domains = [i for i, j in enumerate(variables_domain) if j == m]
+    #if there are more smallest domains instead of choosing random, choose the most constrained variable
+    if ( len(smallest_domains) > 1 ):
+            constraint_count = [0] * len(CSP)
+            # Loop through the constraints and count the number of times a variable occurs in this list
+            for r in constraints:
+                if r not in satisfied_constraints and len(CSP[r.variable1].domain) > 1:
+                    constraint_count[r.variable1] += 1
+                    most_constraining = max(constraint_count)
+            if most_constraining in smallest_domains:
+                smallest_domain = most_constraining
+            else: smallest_domain = smallest_domains[0]
+
+    else: smallest_domain = smallest_domains[0]
+
+    varIndex = smallest_domain
+
+    splitVar = CSP[varIndex]
+
+    valueIndex = random.randint(0, len(splitVar.domain)-1)
+
     value = copy.deepcopy(splitVar.domain[valueIndex])
     CSP_1[varIndex].domain = []
     CSP_1[varIndex].domain.append(value)
